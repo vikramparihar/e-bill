@@ -23,9 +23,12 @@ yarn run dev
 
 ## Features
 
-- George Washington
-- John Adams
-- Thomas Jefferson
+- Small Footprint.
+- Fast datbase retrival (json/ nedb).
+- User freindly UI.
+- GST Enable.
+- Instance searching.
+- Auto calculate price.
 
 
 ## todo
@@ -33,6 +36,7 @@ yarn run dev
 - [ ] Bill/Invoice Print Preview
 - [ ] Graphical report
 - [ ] Bill printing setting
+- [ ] More billing templates
 
 This software is built using
 
