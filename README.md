@@ -45,3 +45,7 @@ This software is built using
 [nedb] (https://github.com/louischatriot/nedb)
 
 [metro-ui] (https://metroui.org.ua/)
+
+
+## License
+
