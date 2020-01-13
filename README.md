@@ -21,11 +21,18 @@ yarn install / npm install (Recommanded yarn)
 yarn run dev
 ```
 
+## Features
+
+- George Washington
+- John Adams
+- Thomas Jefferson
+
+
 ## todo
 
-- [x] Finish my changes
-- [ ] Push my commits to GitHub
-- [ ] Open a pull request
+- [ ] Bill/Invoice Print Preview
+- [ ] Graphical report
+- [ ] Bill printing setting
 
 This software is built using
 
