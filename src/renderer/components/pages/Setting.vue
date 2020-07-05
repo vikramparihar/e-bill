@@ -21,6 +21,10 @@
                                                     <td><textarea v-model="setting.address" required></textarea></td>
                                                 </tr>
                                                 <tr>
+                                                    <td>Contact No.</td>
+                                                    <td><input v-model="setting.contact" maxlength="14" type="text" class="input-small" required placeholder=""/></td>
+                                                </tr>
+                                                <tr>
                                                     <td>
                                                         <input type="submit" class="small">
                                                     </td>
@@ -49,7 +53,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>State Code</td>
-                                                    <td><input v-model="setting.stateCode" type="text" pattern="[0-9]" maxlength="2" class="input-small" placeholder="" required/></td>
+                                                    <td><input v-model="setting.stateCode" type="text" maxlength="2" class="input-small" placeholder="" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>

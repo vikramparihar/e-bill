@@ -38,7 +38,7 @@
                                 <!-- {{ bill.items }}
                                 <hr>
                                 {{ bills }} -->
-                                <Table size="small" :columns="columns1" @on-row-click="preview" :data="bills">
+                                <Table size="small" :columns="columns1" :data="bills">
                                     <template slot-scope="{ row }" slot="total">
                                         <span class="mif-inr"></span>{{ row.total }}
                                     </template>
@@ -46,8 +46,11 @@
                                         {{ row.createdAt | moment("MMMM Do YYYY, h:mm:ss a") }}
                                     </template>
                                     <template slot-scope="{ row, index }" slot="action">
+                                        <div style="width:120px" :id="index">
+                                        <button class="button primary small"  @click="preview(row._id)"><span class="mif-eye"></span></button>
                                         <button class="button secondary small" @click="updateId = row._id; getBill()"><span class="mif-pencil"></span></button>
                                         <button class="button alert small" @click="destroy(row._id)"><span class="mif-bin"></span></button>
+                                        </div>
                                     </template>
                                 </Table>
                             </div>
@@ -144,20 +147,68 @@
                     </Drawer>
                 </div>
                 <!-- <apexchart width="500" type="bar" :options="options" :series="series"></apexchart> -->
-                
+                <!-- {{ setting }} -->
         <Modal
             v-model="modalPreview"
             title="Preview"
             okText= 'Print'
+            width="400"
             >
-            <!-- {{ previewBill }} -->
+            <div class="row" v-if="previewBill">
+                <div class="cell">
+                    <table class="table compact" style="margin:0">
+                        <tr class="bg-light">
+                            <th align="left">Bill No. </th>
+                            <th align="right">1</th>
+                        </tr>
+                        <tr class="bg-light">
+                            <th align="left">Table No. </th>
+                            <th align="right">21</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                {{ previewBill.createdAt| moment("MMMM Do YYYY, h:mm:ss a") }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="cell">
+                    <div style="font-size:13px">
+                        <section>{{ setting.hotelName }}</section>
+                        <section>{{ setting.address }}</section>
+                        <section>{{ setting.contact }}</section>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-table" v-if="previewBill">
+                <table class="table compact">
+                    <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in previewBill.items" :key="item.uuid">
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.dish }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                    <tr><th align="left" colspan="3" class="bg-light">Subtotal</th><td>{{ subTotal }}</td></tr>
+                    <tr><th align="left" colspan="2" class="bg-light">Tax</th><td>7%</td><td>42.76</td></tr>
+                    <tr><th align="left" colspan="3" class="bg-light">Total</th><td>653.64</td></tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="text-center">
-                <section>Radhe Restorent</section>
-                <section>A 402 Radha Residency, Opp Maxus Mall</section>
-                <section>
-                    <label>Table No.</label> 21
-                    <label>Bill No.</label> 01
-                </section>
+                <p>Thank you for dining with us.<br>Visit again!</p>
+                <div>
+                    <!-- <img src="https://barcodesegypt.com/wp-content/uploads/sites/123/2019/05/qr_code_5cdd30e269752.jpg" width="300"/> -->
+                </div>
             </div>
         </Modal>
         </div>
@@ -167,6 +218,7 @@
 <script>
     import Recipe from '../../repository/recipeRepo';
     import Bill from '../../repository/billRepo';
+    import Setting from "../../repository/settingRepo";
     import VueApexCharts from 'vue-apexcharts'
     import Vue from 'vue';
     Vue.component('apexchart', VueApexCharts)
@@ -175,10 +227,11 @@
         name: "home",
         data () {
             return {
+                setting:{},
                 modalPreview: false,
-                previewBill: {},
                 updateId: null,
                 popupCreate: false,
+                billPreview:{},
                 styles: {
                     height: 'calc(100% - 55px)',
                     overflow: 'auto',
@@ -188,6 +241,7 @@
                 billIcon: 'static/icons/icons8-estimate-32.png',
                 dishes: [],
                 bills:[],
+                billPrint:{},
                 bill: {
                     items: [{
                         uuid: new Date().getTime(),
@@ -239,7 +293,10 @@
                 series: [{
                     name: 'series-1',
                     data: [30, 40, 45, 50, 49, 60, 70, 91]
-                }]
+                }],
+                subTotal:0,
+                tax:0,
+                total:0
             }
         },
         beforeMount() {
@@ -248,9 +305,13 @@
         methods:{
             async load() {
                 try {
-                  this.dishes = await Recipe.get();  
-                  this.bills = await Bill.get();
-                  this.bill['billNo'] = eval(this.bills.length + 1);  
+                    this.dishes = await Recipe.get();  
+                    this.bills = await Bill.get();
+                    this.bill['billNo'] = eval(this.bills.length + 1);  
+                    let setting = await Setting.get();
+                    if (setting.length) {
+                        this.setting = setting[0];
+                    }
                 } catch (error) {
                     this.$Message.error('Unable to load dishes');
                     console.log(error);
@@ -350,10 +411,17 @@
                     this.$Message.error("Sorry Unable to delete");
                 }
             },
-            preview (bill, index) {
+            async preview (id) {
+                let bill = await Bill.get(id);
                 this.previewBill = bill;
                 this.modalPreview = true;
-            }
+                let st=0;
+                for (const iterator of bill.items) {
+                    st = st + iterator.total;
+                }
+                this.subTotal = st;
+
+            },
         },
         watch: {
             'bill': {
@@ -379,4 +447,7 @@
 </script>
 
 <style scoped>
+.preview-table thead{
+    border-bottom: 2px dashed #e4e4e4;
+}
 </style>
