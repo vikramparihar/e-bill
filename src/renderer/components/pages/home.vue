@@ -1,7 +1,19 @@
 <template>
     <div>
-        <navigation></navigation>
-        <div class="container-fluid">
+        <header class="bg-green fg-white pb-1">
+            <ul class="h-menu context h-menu-cus">
+                <li>
+                    <router-link :to="{name: 'home-page'}"><span class="mif-spoon-fork"></span> Home</router-link>
+                </li>
+                <li> 
+                    <router-link :to="{name: 'dish-page'}"><img :src="dishIcon" width="18"/> Dishes</router-link>
+                </li>
+                <li> 
+                    <router-link :to="{name: 'setting-page'}"><span class="mif-cogs"></span> Setting</router-link>
+                </li>
+            </ul>
+        </header>
+        <div class="container-fluid-">
             <!-- <div class="row mt-2">
                     <div class="cell-md-4 mt-4">
                         <div class="icon-box border bd-default">
@@ -227,6 +239,8 @@
         name: "home",
         data () {
             return {
+                dishIcon: 'static/icons/icons8-food-service-32.png',
+                previewBill:null,
                 setting:{},
                 modalPreview: false,
                 updateId: null,

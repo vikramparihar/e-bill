@@ -1,7 +1,7 @@
 <template>
   <div>
     <navigation></navigation>
-    <div class="container-fluid">
+    <div class="container-fluid-">
       <div class="row">
         <div class="cell-8">
           <div class="panel w-100">

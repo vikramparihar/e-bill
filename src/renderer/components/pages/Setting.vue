@@ -1,7 +1,7 @@
 <template>
     <div>
         <navigation></navigation>
-        <div class="container-fluid">
+        <div class="container-fluid-">
         
 
                 <div class="row">

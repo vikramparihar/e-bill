@@ -1,7 +1,7 @@
 <template>
     <div>
         <navigation></navigation>
-        <div class="container-fluid">
+        <div class="container-fluid-">
             <div class="row">
                 <div class="cell offset-10 text-right">
                     <router-link class="button light small" :to="{name: 'dish-new'}"><span class="mif-plus"></span> Add New</router-link>
