@@ -1,7 +1,9 @@
 <template>
     <div>
-        <navigation></navigation>
-        <div class="container-fluid-">
+        <header class="bg-green fg-white pb-1">
+          <p class="p-2 bg-white fg-black">Welcome to my kitchen .</p>
+        </header>
+        <div class="container-fluid- mt-4">
         
 
                 <div class="row">
@@ -52,8 +54,8 @@
                                                     <td><input v-model="setting.sgst" type="number" class="input-small" placeholder="" required/></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>State Code</td>
-                                                    <td><input v-model="setting.stateCode" type="text" maxlength="2" class="input-small" placeholder="" required/></td>
+                                                    <td>State Code With Name<br><small>Example: Rajasthan (27)</small></td>
+                                                    <td><input v-model="setting.stateCode" type="text" maxlength="2" class="input-small" placeholder="24 Maharastra" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -64,7 +66,24 @@
                                         </form>
                                     </TabPane>
                                     <TabPane label="Bill setting">
-                                        
+                                        <form v-on:submit.prevent="onSubmit">
+                                        <table class="table subcompact-">
+                                                <tr>
+                                                    <td>Money Format</td>
+                                                    <td>
+                                                        <select v-model="setting.money_format" class="input-small">
+                                                            <option v-for="item in moneyFormats" :value="item" :key="item">{{ item }}</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>
+                                                        <input type="submit" class="small">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
                                     </TabPane>
                                 </Tabs>
                             </div>
@@ -87,6 +106,7 @@
         name: "setting-page",
         data () {
             return {
+                moneyFormats:['$', '₹', '€'],
                 setting: {
                     gstNo: '',
                     cgst: '',
@@ -94,7 +114,8 @@
                     sgst: '',
                     hotelName: '',
                     stateCode: '',
-                    address: ''
+                    address: '',
+                    money_format: '$'
                 }
             }
         },

@@ -1,7 +1,13 @@
 <template>
   <div>
-    <navigation></navigation>
-    <div class="container-fluid-">
+    <header class="bg-green fg-white pb-1">
+            <ul class="h-menu context h-menu-cus">
+                <li>
+                    <router-link  tag="button" class="button light d-block" :to="{name: 'dish-new'}"><span class="mif-add"></span> Add New</router-link>
+                </li>
+            </ul>
+        </header>
+    <div class="container-fluid- mt-4">
       <div class="row">
         <div class="cell-8">
           <div class="panel w-100">

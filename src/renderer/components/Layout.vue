@@ -3,40 +3,31 @@
 		<div class="row">
 		<div class="cell-2 p-0">
 		<div class="app-sidebar">
-			<ul class="v-menu bg-green fg-white">
+			<ul class="v-menu bg-green fg-white pl-2">
 			    <li class="menu-title">General</li>
-			    <li><a href="#"><span class="mif-home icon"></span> Home</a></li>
-			    <li class="menu-title">Services</li>
-			    <li><a href="#"><span class="mif-windows icon"></span> Windows</a></li>
-			    <li><a href="#"><span class="mif-library icon"></span> Office 365</a></li>
+			    <li> <router-link :to="{name: 'home-page'}"><span class="mif-home icon"></span> Home</router-link></li>
+			    <li class="menu-title">Counter</li>
+			    <li><router-link :to="{name: 'order-page'}"><span class="mif-windows icon"></span> Orders</router-link></li>
+			    <li><router-link :to="{name: 'hdorder-page'}"><span class="mif-windows icon"></span> Home Delivery Orders</router-link></li>
+			    <!-- <li><a href="#"><span class="mif-library icon"></span> Bills</a></li> -->
+			    <!-- <li><a href="#"><span class="mif-skype icon"></span> Skype</a></li> -->
+			    <li class="menu-title">Kitchen</li>
+			    <li><router-link :to="{name: 'dish-page'}"><span class="mif-spoon-fork icon"></span> Dishes</router-link></li>
+			    <!-- <li><a href="#"><span class="mif-library icon"></span> Office 365</a></li>
+				<li><a href="#"><span class="mif-skype icon"></span> Skype</a></li> -->
+				<li class="menu-title">Setting</li>
+			    <li><router-link :to="{name: 'setting-page'}"><span class="mif-cogs icon"></span> Setting</router-link></li>
+			    <li class="menu-title">Account</li>
+			    <li><a href="#"><span class="mif-skype icon"></span> Change Password</a></li>
+			    <!-- <li class="menu-title">Support</li>
 			    <li><a href="#"><span class="mif-skype icon"></span> Skype</a></li>
-			    <li class="menu-title">Products</li>
-			    <li><a href="#"><span class="mif-windows icon"></span> Windows</a></li>
-			    <li><a href="#"><span class="mif-library icon"></span> Office 365</a></li>
-			    <li><a href="#"><span class="mif-skype icon"></span> Skype</a></li>
-			    <li class="menu-title">Support</li>
-			    <li>
-			        <a href="#" data-hotkey="Alt+F1">Community</a>
-			        <ul class="v-menu" data-role="dropdown">
-			            <li><a href="#">Blog</a></li>
-			            <li><a href="#">Github</a></li>
-			            <li><a href="#">Forum</a></li>
-			            <li class="divider"></li>
-			            <li class="p-2 bg-light">
-			                <button class="button square primary"><span class="mif-target"></span></button>
-			                <button class="button square success"><span class="mif-apps"></span></button>
-			                <button class="button square alert"><span class="mif-file-code"></span></button>
-			                <button class="button square warning"><span class="mif-download"></span></button>
-			            </li>
-			        </ul>
-			    </li>
 			    <li class="menu-title">Shop</li>
-			    <li><a href="#"><span class="mif-cart icon"></span> Cart</a></li>
+			    <li><a href="#"><span class="mif-cart icon"></span> Cart</a></li> -->
 			</ul>
 		</div>
 		</div>
 		<div class="cell-10 pt-0">
-			<div class="main-content">
+			<div class="main-content pl-5 pr-5">
 				<router-view></router-view>
 			</div>
 		</div>
@@ -59,10 +50,14 @@
 	.app-sidebar{
 		/*width: 200px;
 		display: inline-block;*/
+		position: fixed;
 	}
 	.main-content{
 		/*width: 100%;
 		display: inline-block;
 		padding: 20px;*/
+	}
+	.card-has-table .ivu-card-body{
+		padding: 0px;
 	}
 </style>

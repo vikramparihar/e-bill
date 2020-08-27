@@ -1,4 +1,5 @@
 import db from "../database/connection";
+const slug = require('slug')
 
 class Setting {
   constructor() {

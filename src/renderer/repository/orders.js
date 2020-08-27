@@ -1,14 +1,14 @@
 import db from "../database/connection";
 
-class Bill {
+class Order {
   constructor() {
-    this.bill = db.bill;
+    this.order = db.hdOrders;
   }
-  save(bill) {
+  save(order) {
     return new Promise((resolve, reject) => {
       try {
-        bill['deletedAt'] = null;
-        this.bill.insert(bill, function(err, data) {
+        order['deletedAt'] = null;
+        this.order.insert(order, function(err, data) {
           if (err) {
             console.log(err);
             reject(err);
@@ -21,10 +21,10 @@ class Bill {
       }
     });
   }
-  update(bill, id) {
+  update(order, id) {
     return new Promise((resolve, reject) => {
       try {
-        this.bill.update({ _id: id }, bill, {}, function(err, numReplaced) {
+        this.order.update({ _id: id }, order, {}, function(err, numReplaced) {
           if (err) {
             console.log(err);
             reject(err);
@@ -41,25 +41,25 @@ class Bill {
     return new Promise((resolve, reject) => {
       try {
         if (id) {
-          this.bill.findOne({ _id: id }, function(err, bill) {
+          this.order.findOne({ _id: id }, function(err, order) {
             if (err) {
               reject(err.stack);
             }
-            resolve(bill);
+            resolve(order);
           });
         } else {
           let result = {};
-          this.bill.count({}, function (err, count) {
+          this.order.count({}, function (err, count) {
             result['total'] = count;
           });
-          let page = params ? (params['page'] - 1) : 0;
-          let limit = params ? params['size'] : 6;
+          let page = (params['page'] - 1);
+          let limit = params['size'];
           let skip = page*limit;
-          this.bill.find({ "deletedAt": null }).sort({ billNo: -1}).skip(skip).limit(limit).exec(function(err, bill) {
+          this.order.find({ "deletedAt": null }).sort({ orderNo: -1}).skip(skip).limit(limit).exec(function(err, order) {
             if (err) {
               reject(err.stack);
             }
-            result['bills'] = bill;
+            result['orders'] = order;
             resolve(result);
           });
         }
@@ -71,7 +71,7 @@ class Bill {
   trash(id) {
     return new Promise((resolve, reject) => {
       try {
-        this.bill.update({ _id: id }, { $set: {deletedAt: Date()} }, (err, numUpdated) => {
+        this.order.update({ _id: id }, { $set: {deletedAt: Date()} }, (err, numUpdated) => {
           if (err) {
             reject(err);
           }
@@ -86,7 +86,7 @@ class Bill {
   destroy(id) {
     return new Promise((resolve, reject) => {
       try {
-        this.bill.remove({ _id: id }, {}, (err, numRemoved) => {
+        this.order.remove({ _id: id }, {}, (err, numRemoved) => {
           if (err) {
             reject(err);
           }
@@ -98,10 +98,10 @@ class Bill {
     });
   }
 
-  getBillNo () {
+  getorderNo () {
     return new Promise((resolve, reject) => {
       try {
-        this.bill.count({}, function (err, count) {
+        this.order.count({}, function (err, count) {
           if (err) {
             reject(err);
           }
@@ -113,4 +113,4 @@ class Bill {
     });
   }
 }
-export default new Bill();
+export default new Order();

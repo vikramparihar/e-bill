@@ -13,6 +13,16 @@ db.bill = new Datastore({
   filename: path.join(remote.app.getPath('userData'), '/expostack_bill.db'),
   timestampData: true
 })
+db.hdOrders = new Datastore({
+  autoload: true,
+  filename: path.join(remote.app.getPath('userData'), '/expostack_hdOrders.db'),
+  timestampData: true
+})
+db.customers = new Datastore({
+  autoload: true,
+  filename: path.join(remote.app.getPath('userData'), '/expostack_customers.db'),
+  timestampData: true
+})
 db.setting = new Datastore({
   autoload: true,
   filename: path.join(remote.app.getPath('userData'), '/expostack_setting.db'),
