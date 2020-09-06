@@ -10,6 +10,7 @@ let dishCreate = require('../components/pages/dishCreate').default;
 let dishEdit = require('../components/pages/dishEdit').default;
 let Setting = require('../components/pages/Setting').default;
 let hdOrder = require('../components/pages/hdOrders').default;
+let customer = require('../components/pages/customers').default;
 
 export default new Router({
   routes: [
@@ -51,6 +52,11 @@ export default new Router({
           path: '/setting',
           name: 'setting-page',
           component: Setting
+        },
+        {
+          path: '/customer',
+          name: 'customer-page',
+          component: customer
         },
       ]
     },

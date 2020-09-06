@@ -9,6 +9,7 @@
 			    <li class="menu-title">Counter</li>
 			    <li><router-link :to="{name: 'order-page'}"><span class="mif-windows icon"></span> Orders</router-link></li>
 			    <li><router-link :to="{name: 'hdorder-page'}"><span class="mif-windows icon"></span> Home Delivery Orders</router-link></li>
+			    <li><router-link :to="{name: 'customer-page'}"><span class="mif-windows icon"></span> Customers</router-link></li>
 			    <!-- <li><a href="#"><span class="mif-library icon"></span> Bills</a></li> -->
 			    <!-- <li><a href="#"><span class="mif-skype icon"></span> Skype</a></li> -->
 			    <li class="menu-title">Kitchen</li>

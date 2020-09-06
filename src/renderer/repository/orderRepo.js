@@ -1,6 +1,6 @@
 import db from "../database/connection";
 
-class Order {
+class OrderRepo {
   constructor() {
     this.order = db.hdOrders;
   }
@@ -52,8 +52,8 @@ class Order {
           this.order.count({}, function (err, count) {
             result['total'] = count;
           });
-          let page = (params['page'] - 1);
-          let limit = params['size'];
+          let page = params ? (params['page'] - 1) : 0;
+          let limit = params ? params['size'] : 6;
           let skip = page*limit;
           this.order.find({ "deletedAt": null }).sort({ orderNo: -1}).skip(skip).limit(limit).exec(function(err, order) {
             if (err) {
@@ -113,4 +113,4 @@ class Order {
     });
   }
 }
-export default new Order();
+export default new OrderRepo();
