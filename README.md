@@ -24,7 +24,7 @@ yarn run dev
 ## Features
 
 - Small Footprint.
-- Fast datbase retrival (json/ nedb).
+- Fast database retrival (json/ nedb).
 - User freindly UI.
 - GST Enable.
 - Instance searching.
